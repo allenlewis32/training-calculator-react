@@ -7,7 +7,7 @@ let deleteSymbol = '\u232b', divideSymbol = '\u00f7', multiplySymbol = '\u00d7';
 function App() {
   [display, setDisplay] = useState('0');
   let buttonValues = [
-    ['AC', 'C', '^', deleteSymbol],
+    ['AC', 'C', '+/-', deleteSymbol],
     ['7', '8', '9', divideSymbol],
     ['4', '5', '6', multiplySymbol],
     ['1', '2', '3', '-'],
@@ -17,19 +17,21 @@ function App() {
   for(let row of buttonValues) {
     let buttonRow = [];
     for(let buttonValue of row) {
-      buttonRow.push(<button className='bg-yellow-300 text-xl my-2.5 h-12 w-12 rounded-full border-2 border-black p-1.5 hover:bg-yellow-500' onClick={()=>handleClick(buttonValue)}>{buttonValue}</button>);
+      buttonRow.push(<button className='bg-yellow-300 text-black text-xl h-12 w-12 rounded-full border-2 border-black p-1.5 hover:bg-yellow-500' onClick={()=>handleClick(buttonValue)}>{buttonValue}</button>);
     }
     buttons.push((
-      <div className='flex justify-around w-80'>
+      <div className='flex justify-around w-80 my-2.5'>
         {buttonRow}
       </div>
     ));
   }
   return (
-    <div className='bg-[#faebd7] min-h-screen flex  flex-col items-center justify-center'>
-      <h1 className='text-3xl'>Calculator</h1>
-      <span className='bg-white w-80 leading-8 border border-black p-2 text-end text-2xl m-2.5'>{display}</span>
-      {buttons}
+    <div className='bg-gray-700 min-h-screen flex flex-col items-center justify-center'>
+      <div className='transition-all duration-1000 bg-black text-white flex flex-col items-center p-1 pb-5 rounded-3xl shadow-lg shadow-gray-400'>
+        <h1 className='my-5 text-3xl'>Calculator</h1>
+        <span className='bg-white text-black w-[calc(100%-1.25rem)] leading-8 border border-black p-2 text-end text-2xl m-5'>{display}</span>
+        {buttons}
+      </div>
     </div>
   );
 }
@@ -77,6 +79,11 @@ function handleClick(value) {
         }
         operator = value;
         lastEntryOperator = true;
+        break;
+      case '+/-':
+        if(!lastEntryOperator) {
+          setDisplay(String(-Number(display)));
+        }
         break;
       case '=':
         if(operator !== null) {
