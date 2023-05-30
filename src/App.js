@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 
 let display, setDisplay;
 
@@ -18,18 +17,18 @@ function App() {
   for(let row of buttonValues) {
     let buttonRow = [];
     for(let buttonValue of row) {
-      buttonRow.push(<button onClick={()=>handleClick(buttonValue)}>{buttonValue}</button>);
+      buttonRow.push(<button className='bg-yellow-300 text-xl my-2.5 h-12 w-12 rounded-full border-2 border-black p-1.5 hover:bg-yellow-500' onClick={()=>handleClick(buttonValue)}>{buttonValue}</button>);
     }
     buttons.push((
-      <div className='Row'>
+      <div className='flex justify-around w-80'>
         {buttonRow}
       </div>
     ));
   }
   return (
-    <div className='Calculator Col'>
-      <h1>Calculator</h1>
-      <span className='Display'>{display}</span>
+    <div className='bg-[#faebd7] min-h-screen flex  flex-col items-center justify-center'>
+      <h1 className='text-3xl'>Calculator</h1>
+      <span className='bg-white w-80 leading-8 border border-black p-2 text-end text-2xl m-2.5'>{display}</span>
       {buttons}
     </div>
   );
